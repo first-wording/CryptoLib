@@ -183,3 +183,34 @@ class Permutation(Classical):
     """
     置换密码体制，密钥是置换表，字典类型
     """
+    def encode(self):
+        plain = self.getPlain().upper()
+        cipher = ''
+
+        n = 0 # n 表示已经处理的组数
+        key_len = len(self.getKey())
+
+        # key_nagtive = {v: k for k,v in self.getKey().items()}
+        key = self.getKey()
+        for i in range(1, len(plain) + 1):
+            n = (i - 1) // key_len
+            index = (i - 1) % key_len + 1 # index 表示某位字符在该分组下的索引，范围 1...key_len
+
+            # print('dbg:', n * key_len, key_nagtive[index])
+
+            cipher += plain[n * key_len + key[index] - 1]
+        return cipher
+
+    def decode(self):
+        cipher = self.getCipher().lower()
+        plain = ''
+
+        n = 0
+        key_len = len(self.getKey())
+
+        key_nagtive = {v: k for k,v in self.getKey().items()}
+        for i in range(1, len(cipher) + 1):
+            n = (i - 1) // key_len
+            index = (i - 1) % key_len + 1
+            plain += cipher[n * key_len + key_nagtive[index] - 1]
+        return plain

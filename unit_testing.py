@@ -54,3 +54,13 @@ if __name__ == '__main__':
     Hill_c = Hill1.getCipher()
     Hill2 = Hill(cipher=Hill_c, key=[[11, 8], [3, 7]])
     print(Hill2.getPlain())
+
+    # unit testing for Permutation
+    Perm_p = 'shesellsseashellsbytheseashore'
+    Perm1 = Permutation(plain=Perm_p, key={1:3, 2:5, 3:1, 4:6, 5:4, 6:2})
+
+    print(Perm1.getCipher())
+
+    Perm_c = Perm1.getCipher()
+    Perm2 = Permutation(cipher=Perm_c, key={1:3, 2:5, 3:1, 4:6, 5:4, 6:2})
+    print(Perm2.getPlain())
