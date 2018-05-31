@@ -1,4 +1,4 @@
-# Crypto lib.
+# Crypto Lib
 
 这是一个用 Python3 实现的密码库。
 
@@ -10,18 +10,6 @@
 
 `multiply.py` 是我的作业……同时也是一个简短的库的使用说明。
 
-`unit_testing.py` 是临时写的用来测试古典密码体制类的。
-
-
-
 ## 乘积密码的加密顺序
 
-```flow
-op1=>operation: 代换密码体制
-op2=>operation: 仿射密码体制
-op3=>operation: 维吉尼亚密码体制
-op4=>operation: 希尔密码体制
-
-op1->op2->op3->op4
-```
-
+具体内容见 `./doc/密码学大作业实验报告.pdf`
