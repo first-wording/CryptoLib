@@ -62,13 +62,15 @@ class Caesar(Classical):
     def encode(self):
         cipher = self.getPlain().upper()
         for i in range(0, len(cipher)):
-            cipher = cipher[:i] + chr((ord(cipher[i]) - ord('A') + self.getKey()) % 26 + ord('A')) + cipher[i+1:]
+            if cipher[i].isalpha():
+                cipher = cipher[:i] + chr((ord(cipher[i]) - ord('A') + self.getKey()) % 26 + ord('A')) + cipher[i+1:]
         return cipher
 
     def decode(self):
         plain = self.getCipher().lower()
         for i in range(0, len(plain)):
-            plain = plain[:i] + chr((ord(plain[i]) - ord('a') - self.getKey() + 26) % 26 + ord('a')) + plain[i+1:]
+            if plain[i].isalpha():
+                plain = plain[:i] + chr((ord(plain[i]) - ord('a') - self.getKey() + 26) % 26 + ord('a')) + plain[i+1:]
         return plain
 
 class Substitution(Classical):
@@ -80,14 +82,16 @@ class Substitution(Classical):
     def encode(self):
         cipher = self.getPlain()
         for i, text in enumerate(cipher):
-            cipher = cipher[:i] + self.getKey()[text].upper() + cipher[i+1:]
+            if cipher[i].isalpha():
+                cipher = cipher[:i] + self.getKey()[text].upper() + cipher[i+1:]
         return cipher
 
     def decode(self):
         key_negtive = {v: k for k, v in self.getKey().items()} # 通过字典推异构造 key 的逆映射
         plain = self.getCipher()
         for i, text in enumerate(plain):
-            plain = plain[:i] + key_negtive[text].lower() + plain[i+1:]
+            if plain[i].isalpha():
+                plain = plain[:i] + key_negtive[text].lower() + plain[i+1:]
         return plain
 
 class Affine(Classical):
@@ -98,14 +102,16 @@ class Affine(Classical):
     def encode(self):
         cipher = self.getPlain().upper()
         for i in range(0, len(cipher)):
-            cipher = cipher[:i] + chr(((ord(cipher[i]) - ord('A')) * self.getKey()[0] + self.getKey()[1]) % 26 + ord('A')) + cipher[i+1:]
+            if cipher[i].isalpha():
+                cipher = cipher[:i] + chr(((ord(cipher[i]) - ord('A')) * self.getKey()[0] + self.getKey()[1]) % 26 + ord('A')) + cipher[i+1:]
         return cipher
 
     def decode(self):
         plain = self.getCipher().lower()
         key_nagtive = cryptomath.ext_euclid(self.getKey()[0], 26)[1] % 26 # 扩展欧几里得算法求乘法逆元
         for i in range(0, len(plain)):
-            plain = plain[:i] + chr(((ord(plain[i]) - ord('a') - self.getKey()[1]) * key_nagtive) % 26 + ord('a')) + plain[i+1:]
+            if plain[i].isalpha():
+                plain = plain[:i] + chr(((ord(plain[i]) - ord('a') - self.getKey()[1]) * key_nagtive) % 26 + ord('a')) + plain[i+1:]
         return plain
 
 class Vigenere(Classical):
